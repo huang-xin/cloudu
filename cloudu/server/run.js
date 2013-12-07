@@ -2,8 +2,7 @@ var cloudu = {};
 var http = require('http'),
 	url = require('url'),
 	fs = require('fs'),
-	path = require('path'),
-	socket = require('socket.io');
+	path = require('path')
 
 var BAE = cloudu.BAE = require('./bae'),
 	MIME = cloudu.MIME = require('./mime');
@@ -33,5 +32,18 @@ var entry = function(req, res){
 }
 
 var httpServer = http.createServer(entry);
+var io = require('socket.io').listen(httpServer);
 httpServer.listen(BAE.port);
 console.log("http server listening on port", BAE.port);
+
+io.set("log level", 1);
+io.sockets.on('connection', function (socket) {
+	socket.on('message', function (data) {
+		console.log("on_data_write_from_client:");
+		if(data.on){
+			console.log("switch on");
+		}else{
+			console.log("switch off");
+		}
+	});
+});
