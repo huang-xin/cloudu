@@ -1,0 +1,71 @@
+/*------------header:begin--------------*/
+.header {
+	background-color: #163c56;
+	/*border-bottom: solid 1px #B3B3B3;
+	 -webkit-box-shadow: 0 1px 1px 0px #DFDFDF;
+	 box-shadow: 0 1px 1px 0px #DFDFDF;*/
+	text-align: center;
+}
+.header > div {
+	position: relative;
+	padding: 10px;
+}
+.header h1 {
+	font-size: 20px;
+	display: inline-block;
+	color: #fff;
+}
+.header .btn {
+	position: absolute;
+	right: 15px;
+	padding: 0;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	top: 10px;
+	font-family: arial;
+	font-weight: bold;
+	font-size: 23px;
+}
+
+/*-------------header:end-----------------------*/
+
+.footer {
+	clear: both;
+	text-align: center;
+	padding: 5px 10px 8px 5px;
+	position: relative;
+	color:#666;
+	font-size:12px;
+}
+
+.device-list:before, .device-list:after {
+	display: table;
+	content: " ";
+}
+.tile-image {
+	height: 90px;
+	margin: 10px;
+	border-radius:18px;
+}
+.device-item {
+	width: 50%;
+	float: left;
+	position: relative;
+	min-height: 1px;
+	/*padding-right: 15px;
+	 padding-left: 15px;*/
+}
+.tile {
+	margin: 10px 6px;
+	background-color: #eff0f2;
+	height: 180px;
+	position: relative;
+	text-align: center;
+}
+.tile-title {
+	font-size: 14px;
+	color: #555;
+	margin-bottom: 10px;
+}
+

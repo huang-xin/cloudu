@@ -1,0 +1,111 @@
+
+/*欢迎页面 begin*/
+.welcome-bg{
+    background:url("../images/welcome_bg.png?t=201312022232") repeat-x;
+    height: 441px;
+}
+.welcome .welcomelogo{
+    width: 125px;
+    height: 100px;
+    background: url("../images/welcome_logo.png?t=201312022232") no-repeat;
+    background-size: 125px 100px;
+    margin:0 auto;
+    position: relative;
+    top: 39px;
+}
+.welcome .intro{
+    width:115px;
+    height: 50px;
+    background:url("../images/welcome_intro.png?t=201312022232") no-repeat;
+    background-size: 115px 50px;
+    margin:0 auto;
+    position: relative;
+    top: 45px;
+}
+.welcome .btn{
+    width: 245px;
+}
+.welcome .login-btn{
+    width: 245px;
+    height: 40px;
+    margin:0 auto;
+    position: relative;
+    top: 80px;
+}
+.welcome .reg-btn{
+    width: 245px;
+    height: 40px;
+    margin:0 auto;
+    position: relative;
+    top: 94px;
+}
+.welcome .third-btns{
+    color: #87898A;
+    font-size: 12px;
+    position: relative;
+    top: 128px;
+    width: 245px;
+    margin:0 auto;
+}
+.welcome .third-btns .isina,.welcome .third-btns .iqq,.welcome .third-btns .irenren{
+    position: absolute;
+    top: 5px;
+}
+.welcome .third-btns .sina,.welcome .third-btns .renren,.welcome .third-btns .qq{
+    position: absolute;
+    top: 24px;
+    width: 30px;
+    height: 30px;
+    border-radius: 45px;
+    background-color: #E9F0F3;
+}
+.welcome .third-btns .renren{
+    margin-left: 60px;
+}
+.welcome .third-btns .qq{
+    margin-left: 120px;
+}
+.welcome-footer{
+    background-color: #595B5D; 
+    font-size: 10px;
+    color: #FFFFFF;   
+}
+.welcome-footer .welcome-other{
+    width: 320px;
+    height: 39px;
+    margin:0 auto;
+    position: relative;
+}
+.welcome-footer .logo{
+    width: 20px;
+    height: 15px;
+    background:url("../images/welcome-footerlogo.png?t=201312022232") 0px 0px no-repeat;
+    background-size: 65px 18px;
+    display: inline-block;
+    margin-left: 4px;
+    margin-top: 9px;
+    position:relative;
+    top: 1px;
+}
+.welcome-footer .guide{
+    width: 33px;
+    height: 15px;
+    background: url("../images/welcome-footerlogo.png?t=201312022232") -21px 0px no-repeat;
+    background-size: 65px 18px;
+    display: inline-block;
+}
+.welcome-footer .button{
+    width: 53px;
+    height: 28px;
+    font-size: 11px;
+    line-height: 28px;
+    text-align: center;
+    display: inline-block;
+}
+.welcome .welcomead{
+    display: block; 
+    position:relative;
+    top: 100px;
+    text-align: center;
+}
+/*欢迎页面end*/
