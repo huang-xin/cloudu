@@ -1,0 +1,29 @@
+{
+  "name": "cloudu",
+  "version": "0.0.0",
+  "description": "Cloud Union Framework",
+  "main": "server/run.js",
+  "dependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-concat": "~0.3.0",
+    "socket.io": "~0.9.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/einsteinhx/cloudu.git"
+  },
+  "keywords": [
+    "cloud",
+    "hardware",
+    "platform"
+  ],
+  "author": "huangxin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/einsteinhx/cloudu/issues"
+  }
+}
