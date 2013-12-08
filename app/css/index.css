@@ -44,10 +44,35 @@
 	content: " ";
 }
 .tile-image {
+	width:90px;
 	height: 90px;
+	background-size:90px 90px;
 	margin: 10px;
 	border-radius:18px;
+	display:inline-block;
+	-webkit-transition: all 0.75s;
+-webkit-backface-visibility: hidden;
 }
+.iiermu{
+background-image:url(../images/icons/iermu.jpg);
+}
+.ibulb{
+background-image:url(../images/icons/bulb.jpg);
+}
+.itempSensor{
+background-image:url(../images/icons/tempSensor.jpg);
+}
+.iiermu.black{
+background-image:url(../images/icons/iermu-black.jpg);
+}
+.ibulb.black{
+background-image:url(../images/icons/bulb-black.jpg);
+}
+.itempSensor.black{
+background-image:url(../images/icons/tempSensor-black.jpg);
+}
+.ibulb-black{background-image:url(../images/icons/ibulb.png); background-position: 0 0;  } 
+.ibulb{ background-image:url(../images/icons/ibulb.png);background-position: 0 -91px; } 
 .device-item {
 	width: 50%;
 	float: left;

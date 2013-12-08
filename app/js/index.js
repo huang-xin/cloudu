@@ -1,24 +1,25 @@
 var toggleHandler = function(toggle) {
-	var toggle = toggle;
-	var radio = $(toggle).find("input");
+	var $toggle = $(toggle);
+	var radio = $toggle.find("input"),$img=$toggle.parent().find('.tile-image');
 
 	var checkToggleState = function() {
 		if(radio.eq(0).is(":checked")||radio.eq(0).attr("checked")=="checked") {
-			$(toggle).removeClass("toggle-off");
+			$toggle.removeClass("toggle-off");
+			$img.removeClass("black");
 		} else {
-			$(toggle).addClass("toggle-off");
+			$toggle.addClass("toggle-off");
+			$img.addClass("black");
 		}
 	};
 
 	checkToggleState();
 
-	radio.eq(0).click(function() {
-		$(toggle).toggleClass("toggle-off");
+	radio.click(function() {
+		$toggle.toggleClass("toggle-off");
+		$img.toggleClass("black");
 	});
 
-	radio.eq(1).click(function() {
-		$(toggle).toggleClass("toggle-off");
-	});
+	
 };
 
 $(document).ready(function() {
