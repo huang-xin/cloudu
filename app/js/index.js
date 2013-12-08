@@ -1,14 +1,14 @@
 var toggleHandler = function(toggle) {
 	var $toggle = $(toggle);
-	var radio = $toggle.find("input"),$img=$toggle.parent().find('.tile-image');
+	var radio = $toggle.find("input"),$item=$toggle.parent();
 
 	var checkToggleState = function() {
 		if(radio.eq(0).is(":checked")||radio.eq(0).attr("checked")=="checked") {
 			$toggle.removeClass("toggle-off");
-			$img.removeClass("black");
+			$item.removeClass("inactive");
 		} else {
 			$toggle.addClass("toggle-off");
-			$img.addClass("black");
+			$item.addClass("inactive");
 		}
 	};
 
@@ -16,7 +16,7 @@ var toggleHandler = function(toggle) {
 
 	radio.click(function() {
 		$toggle.toggleClass("toggle-off");
-		$img.toggleClass("black");
+		$item.toggleClass("inactive");
 	});
 
 	

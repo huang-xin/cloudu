@@ -61,13 +61,13 @@
 			var renderList = function() {
 				var listStr = "";
 				for(var i in deviceName) {
-					listStr += '<div class="device-item"><div class="tile">';
+					listStr += '<a href="'+i+'.html" class="device-item"><div class="tile">';
 					listStr += '<span title="' + deviceName[i] + '" class="tile-image i'+i+'"></span>';
 					listStr += '<h3 class="tile-title">' + deviceName[i] + '</h3>';
 					listStr += '<div class="toggle"><label class="toggle-radio">ON</label>';
 					listStr += '<input type="radio" name="toggleOptions" value="option1" checked="checked">';
 					listStr += '<label class="toggle-radio">OFF</label>';
-					listStr += '<input type="radio" name="toggleOptions" value="option2"></div></div></div>';
+					listStr += '<input type="radio" name="toggleOptions" value="option2"></div></div></a>';
 				}
 				$('#deviceList').html(listStr);
 			}

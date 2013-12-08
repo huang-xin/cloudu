@@ -46,38 +46,29 @@
 .tile-image {
 	width:90px;
 	height: 90px;
-	background-size:90px 90px;
+	background-size:90px 180px;
 	margin: 10px;
 	border-radius:18px;
 	display:inline-block;
-	-webkit-transition: all 0.75s;
+	
 -webkit-backface-visibility: hidden;
 }
-.iiermu{
-background-image:url(../images/icons/iermu.jpg);
+
+.ibulb{background-image:url(../images/icons/bulb.jpg); background-position: 0 0;  } 
+.inactive .ibulb{background-position: 0 -90px; } 
+.itempSensor{background-image:url(../images/icons/tempSensor.jpg); background-position: 0 0;  } 
+.inactive .itempSensor{background-position: 0 -90px; } 
+.iiermu{background-image:url(../images/icons/iermu.jpg); background-position: 0 0;  } 
+.inactive .iiermu{background-position: 0 -90px; } 
+.inactive .tile-title{
+color:#aaa;
 }
-.ibulb{
-background-image:url(../images/icons/bulb.jpg);
-}
-.itempSensor{
-background-image:url(../images/icons/tempSensor.jpg);
-}
-.iiermu.black{
-background-image:url(../images/icons/iermu-black.jpg);
-}
-.ibulb.black{
-background-image:url(../images/icons/bulb-black.jpg);
-}
-.itempSensor.black{
-background-image:url(../images/icons/tempSensor-black.jpg);
-}
-.ibulb-black{background-image:url(../images/icons/ibulb.png); background-position: 0 0;  } 
-.ibulb{ background-image:url(../images/icons/ibulb.png);background-position: 0 -91px; } 
 .device-item {
 	width: 50%;
 	float: left;
 	position: relative;
 	min-height: 1px;
+	display:block;
 	/*padding-right: 15px;
 	 padding-left: 15px;*/
 }
