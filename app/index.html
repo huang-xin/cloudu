@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -17,21 +18,28 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="stylesheet" href="css/base.css" />
 		<link rel="stylesheet" href="css/button.css" />
-		<link rel="stylesheet" href="css/form.css" />
+		<link rel="stylesheet" href="css/switch.css" />
 		<!-- Loading Flat UI -->
 		<!-- <link href="css/flat-ui.css" rel="stylesheet"> -->
 		<link href="css/index.css" rel="stylesheet">
 		<script type="text/javascript" src="cloudu.js"></script>
+
 	</head>
 
 	<body>
-		<div>
+		<div id="page">
 			<header class="header" id="header">
-				<div>
-					<h1>Sarahy的云联设备</h1>
-					<button class="btn blue-btn ">
-						+
-					</button>
+				<h1>Sarahy的云联设备</h1>
+				<button class="btn blue-btn open-popbox-btn" id="openPopboxBtn">
+					+
+				</button>
+				<div class="bind-device-popbox">
+					<input type="text" id="cloudIdInput" placeholder="设备云联ID(16位)"/>
+					<input type="text" id="deviceNameInput" placeholder="设备名称(显示在您的设备列表里)"/>
+					<div class="error"></div>
+					<div class="btns">
+						<span class="btn blue-btn bind-btn">绑定</span><span class="btn white-btn cancel-btn">取消</span>
+					</div>
 				</div>
 			</header>
 
@@ -46,33 +54,49 @@
 			</footer>
 		</div>
 		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap-switch.js"></script>
-		<script type="text/javascript" src="js/flatui-checkbox.js"></script>
-		<script type="text/javascript" src="js/flatui-radio.js"></script>
+		<script type="text/javascript" src="js/api.js"></script>
+		<script type="text/javascript" src="js/ui.js"></script>
+		<!-- <script type="text/javascript" src="js/util.js"></script> -->
+		<script type="text/javascript" src="js/switch.js"></script>
+		<script type="text/javascript" src="js/bindDevice.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
-			//$("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
-			//$('.toggle').bootstrapSwitch();
-			var deviceName = {
-				"bulb" : "客厅主灯",
-				"iermu" : "百度i耳目",
-				"tempSensor" : "温度传感器"
-			}
-			var renderList = function() {
-				var listStr = "";
-				for(var i in deviceName) {
-					listStr += '<a href="'+i+'.html" class="device-item"><div class="tile">';
-					listStr += '<span title="' + deviceName[i] + '" class="tile-image i'+i+'"></span>';
-					listStr += '<h3 class="tile-title">' + deviceName[i] + '</h3>';
-					listStr += '<div class="toggle"><label class="toggle-radio">ON</label>';
-					listStr += '<input type="radio" name="toggleOptions" value="option1" checked="checked">';
-					listStr += '<label class="toggle-radio">OFF</label>';
-					listStr += '<input type="radio" name="toggleOptions" value="option2"></div></div></a>';
-				}
-				$('#deviceList').html(listStr);
-			}
-			renderList();
+            
+            //$("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
+            //$('.toggle').bootstrapSwitch();
+            var deviceName = {
+                "bulb" : "客厅主灯",
+                "iermu" : "百度i耳目",
+                "tempSensor" : "温度传感器"
+            }
+            var deviceName = {
+                "bulb" : "客厅主灯",
+                "iermu" : "百度i耳目",
+                "tempSensor" : "温度传感器"
+            }
+            var renderList = function() {
+                var listStr = "";
+                for (var i in deviceName) {
+                    listStr += '<a href="' + i + '.html" class="device-item"><div class="tile">';
+                    listStr += '<span title="' + deviceName[i] + '" class="tile-image i' + i + '"></span>';
+                    listStr += '<h3 class="tile-title">' + deviceName[i] + '</h3>';
+                    listStr += '</div></a>';
+                    //var
+                }
+                $('#deviceList').html(listStr);
+            }
+            $(document).ready(function() {
+                $(".device-item .tile").each(function(index, device) {
+                    var $curDevice = $(device).parent();
+                    new Switch(device, function() {
+                        $curDevice.removeClass('inactive');
+                    }, function() {
+                        $curDevice.addClass('inactive');
+                    });
+                });
+            });
+            renderList();
+
 		</script>
 	</body>
 </html>
