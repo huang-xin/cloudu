@@ -1,14 +1,41 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-	<title>百度i耳目</title>
-	<script type="text/javascript">
-  document.createElement('video');document.createElement('audio');
-</script>
-</head>
-<body>
-	<div>百度i耳目详情页</div>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<title>百度i耳目</title>
+		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/button.css" />
+		<link rel="stylesheet" href="css/switch.css" />
+		<!-- Loading Flat UI -->
+		<!-- <link href="css/flat-ui.css" rel="stylesheet"> -->
+		<link href="css/index.css" rel="stylesheet">
+		<script type="text/javascript" src="cloudu.js"></script>
+	</head>
+	<body>
+		<div>
+			百度i耳目详情页
+			<img id="imgVideo" src="" alt="" />
+		</div>
+		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="js/api.js"></script>
+		<script type="text/javascript" src="js/ui.js"></script>
+		<!-- <script type="text/javascript" src="js/util.js"></script> -->
+		<script type="text/javascript" src="js/switch.js"></script>
+		<script type="text/javascript" src="js/bindDevice.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript">
+            var i = 1;
+            var timer = setInterval(function() {
+                if (i < 9) {
+                    $('#imgVideo').attr('src', 'images/video/' + i + '.jpg');
+                    i++;
+                } else {
+                    clearTimeout(timer);
+                }
+
+            }, 150)
+
+		</script>
+	</body>
 </html>
