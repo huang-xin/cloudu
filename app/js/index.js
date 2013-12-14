@@ -1,24 +1,25 @@
 var toggleHandler = function(toggle) {
-	var toggle = toggle;
-	var radio = $(toggle).find("input");
+	var $toggle = $(toggle);
+	var radio = $toggle.find("input"),$item=$toggle.parent();
 
 	var checkToggleState = function() {
 		if(radio.eq(0).is(":checked")||radio.eq(0).attr("checked")=="checked") {
-			$(toggle).removeClass("toggle-off");
+			$toggle.removeClass("toggle-off");
+			$item.removeClass("inactive");
 		} else {
-			$(toggle).addClass("toggle-off");
+			$toggle.addClass("toggle-off");
+			$item.addClass("inactive");
 		}
 	};
 
 	checkToggleState();
 
-	radio.eq(0).click(function() {
-		$(toggle).toggleClass("toggle-off");
+	radio.click(function() {
+		$toggle.toggleClass("toggle-off");
+		$item.toggleClass("inactive");
 	});
 
-	radio.eq(1).click(function() {
-		$(toggle).toggleClass("toggle-off");
-	});
+	
 };
 
 $(document).ready(function() {

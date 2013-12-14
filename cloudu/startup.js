@@ -9,7 +9,6 @@ cloudu.reg = function(name){
 	return cloudu[name];
 };
 
-
 (function(){
 	
 	var dispatcher = cloudu.reg("dispatcher");
@@ -21,10 +20,8 @@ cloudu.reg = function(name){
 			console.warm("cannot find handler", message);
 		}
 	}
-	
-	var socket = io.connect(location.origin);
+
+	var socket = io.connect(location.origin + ":18080");
 	socket.on("message", dispatcher.onMessage);
-	
-	cloudu.socket = socket;
 	
 })();

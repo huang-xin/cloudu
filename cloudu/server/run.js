@@ -2,9 +2,11 @@ var cloudu = {};
 var http = require('http'),
 	url = require('url'),
 	fs = require('fs'),
-	path = require('path')
+	path = require('path'),
+	net = require('net');
 
 var BAE = cloudu.BAE = require('./bae'),
+	TCP = cloudu.TCP = require('./tcp'),
 	MIME = cloudu.MIME = require('./mime');
 
 var rootdir = __dirname + "/../../";
@@ -22,28 +24,36 @@ var entry = function(req, res){
 	fs.readFile(destname, function(err, data){
 		if(err){
 			res.writeHead(404);
-			res.end();
+			res.end("404 you know it.");
 			return;
 		}
-		
 		res.writeHead(200, {'Content-Type': MIME.lookupExtension(path.extname(destname))});
 		res.end(data);
 	});
 }
 
-var httpServer = http.createServer(entry);
-var io = require('socket.io').listen(httpServer);
-httpServer.listen(BAE.port);
-console.log("http server listening on port", BAE.port);
+//var httpServer = http.createServer(entry);
+//httpServer.listen(BAE.port);
 
-io.set("log level", 1);
+var io = require('socket.io').listen(BAE.port);
 io.sockets.on('connection', function (socket) {
 	socket.on('message', function (data) {
-		console.log("on_data_write_from_client:");
-		if(data.on){
-			console.log("switch on");
-		}else{
-			console.log("switch off");
-		}
+		console.log("data_write_from_client:", data);
+	});
+	socket.on('disconnect', function(){
+		console.log('socket disconnected', socket);
 	});
 });
+
+var tcpServer = net.createServer(function(conn){
+	conn.on('data', function(data){
+		conn.write(data.toString());
+	});
+	
+	conn.on('end', function(){
+		conn.write("close");
+	});
+
+});
+
+tcpServer.listen(TCP.port);
