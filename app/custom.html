@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>index</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Tiffany" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/button.css" />
+		<link rel="stylesheet" href="css/form.css" />
+		<!-- Loading Flat UI -->
+		<!-- <link href="css/flat-ui.css" rel="stylesheet"> -->
+		<link href="css/index.css" rel="stylesheet">
+		<script type="text/javascript" src="cloudu.js"></script>
+	</head>
+
+	<body>
+		<div>
+			<header class="header" id="header">
+				<div>
+					<h1>Sarahy的云联设备</h1>
+					<button class="btn blue-btn ">
+						+
+					</button>
+				</div>
+			</header>
+
+			<div class="device-list" id="deviceList">
+
+			</div>
+
+			<footer class="footer">
+				<p>
+					&copy; Copyright  by 含氮的脂肪
+				</p>
+			</footer>
+		</div>
+		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-switch.js"></script>
+		<script type="text/javascript" src="js/flatui-checkbox.js"></script>
+		<script type="text/javascript" src="js/flatui-radio.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript">
+			//$("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
+			//$('.toggle').bootstrapSwitch();
+			var deviceName = {
+				"bulb" : "客厅主灯",
+				"iermu" : "百度i耳目",
+				"tempSensor" : "温度传感器"
+			}
+			var renderList = function() {
+				var listStr = "";
+				for(var i in deviceName) {
+					listStr += '<div class="device-item"><div class="tile">';
+					listStr += '<img src="images/icons/' + i + '.jpg" alt="' + deviceName[i] + '" class="tile-image">';
+					listStr += '<h3 class="tile-title">' + deviceName[i] + '</h3>';
+					listStr += '<div class="toggle"><label class="toggle-radio">ON</label>';
+					listStr += '<input type="radio" name="toggleOptions" value="option1" checked="checked">';
+					listStr += '<label class="toggle-radio">OFF</label>';
+					listStr += '<input type="radio" name="toggleOptions" value="option2"></div></div></div>';
+				}
+				$('#deviceList').html(listStr);
+			}
+			renderList();
+		</script>
+	</body>
+</html>
