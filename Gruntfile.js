@@ -11,7 +11,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: ['node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js', 'cloudu/startup.js', 'cloudu/src/*.js'],
-                dest: 'app/cloudu.js',
+                dest: 'build/cloudu.js',
             },
         }
     });
