@@ -1,27 +1,28 @@
-var Cloudu = {};
+var cu = {};
 
-Cloudu.reg = function(name){
-	if(typeof Cloudu[name] === 'undefined'){
-		Cloudu[name] = {};
+cu.reg = function(name){
+	if(typeof cu[name] === 'undefined'){
+		cu[name] = {};
 	}else{
 		console.log('duplicate module name');
 	}
-	return Cloudu[name];
+	return cu[name];
 };
 
 (function(){
 	
-	var dispatcher = Cloudu.reg("dispatcher");
+	var dispatcher = cu.reg("dispatcher");
 	dispatcher.onMessage = function(message){
 		console.log("message", message);
 		try{
-			Cloudu[message.cmd][message.method].call(null, message.data);
+			cu[message.cmd][message.method].call(null, message.data);
 		}catch(e){
 			console.warn("cannot find handler", message);
 		}
 	}
 
-	var socket = io.connect(location.origin);
+	var socket = io.connect('http://192.168.199.153:8080');
 	socket.on("message", dispatcher.onMessage);
-	Cloudu.socket = socket;
+	cu.socket = socket;
+	
 })();

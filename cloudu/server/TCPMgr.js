@@ -1,12 +1,12 @@
-var runnable = function(utils){
+var runnable = function(cloudu){
 
-	var L = 8;
+	var L = 10;//TODO change to uuid
 	var connections = {};
 
 	var manager = {
 
 		add : function(conn){
-			var uid = utils.randomStr(8);
+			var uid = cloudu.utils.randomStr(L);
 			conn.uid = uid;
 			connections[uid] = conn;
 			return uid;

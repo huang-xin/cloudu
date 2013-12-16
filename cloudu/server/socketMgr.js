@@ -1,19 +1,16 @@
-var runnable = function(utils){
+var runnable = function(cloudu){
 
-	var L = 8;
 	var sockets = {};
 	
 	var manager = {
 
 		add : function(socket){
-			var uid = utils.randomStr(8);
-			socket.uid = uid;
-			sockets[uid] = socket;
-			return uid;
+			sockets[socket.id] = socket;
+			return socket.id;
 		},
 
-		remove : function(uid){
-			delete sockets[uid];
+		remove : function(id){
+			delete sockets[id];
 		}
 
 	};
