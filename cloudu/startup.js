@@ -1,27 +1,27 @@
-var cloudu = {};
+var Cloudu = {};
 
-cloudu.reg = function(name){
-	if(typeof cloudu[name] === 'undefined'){
-		cloudu[name] = {};
+Cloudu.reg = function(name){
+	if(typeof Cloudu[name] === 'undefined'){
+		Cloudu[name] = {};
 	}else{
 		console.log('duplicate module name');
 	}
-	return cloudu[name];
+	return Cloudu[name];
 };
 
 (function(){
 	
-	var dispatcher = cloudu.reg("dispatcher");
+	var dispatcher = Cloudu.reg("dispatcher");
 	dispatcher.onMessage = function(message){
-		console.log(message);
+		console.log("message", message);
 		try{
-			cloudu[message.cmd][message.method].call(null, message.data);
+			Cloudu[message.cmd][message.method].call(null, message.data);
 		}catch(e){
-			console.warm("cannot find handler", message);
+			console.warn("cannot find handler", message);
 		}
 	}
 
-	var socket = io.connect(location.origin + ":18080");
+	var socket = io.connect(location.origin);
 	socket.on("message", dispatcher.onMessage);
-	
+	Cloudu.socket = socket;
 })();
