@@ -24,7 +24,7 @@ var entry = function(req, res){
 	fs.readFile(destname, function(err, data){
 		if(err){
 			res.writeHead(404);
-			res.end();
+			res.end("404 you know it.");
 			return;
 		}
 		res.writeHead(200, {'Content-Type': MIME.lookupExtension(path.extname(destname))});
@@ -32,33 +32,28 @@ var entry = function(req, res){
 	});
 }
 
-var httpServer = http.createServer(entry);
-var io = require('socket.io').listen(httpServer);
-var tcpServer = net.createServer(TCP.port, function(conn){
+//var httpServer = http.createServer(entry);
+//httpServer.listen(BAE.port);
 
-	console.log("client connected.");
-
-	conn.on('data', function(data){
-		console.log("data_write_from_TCP_client");
-		console.log(data.toString());
-		conn.write("hello tcp client");
-	});
-	
-	conn.on('end', function(){
-		console.log("client disconnected.");
-	});
-
-});
-
-httpServer.listen(BAE.port);
-tcpServer.listen(TCP.port);
-
-
+var io = require('socket.io').listen(BAE.port);
 io.sockets.on('connection', function (socket) {
 	socket.on('message', function (data) {
 		console.log("data_write_from_client:", data);
 	});
 	socket.on('disconnect', function(){
 		console.log('socket disconnected', socket);
-	})
+	});
 });
+
+var tcpServer = net.createServer(function(conn){
+	conn.on('data', function(data){
+		conn.write(data.toString());
+	});
+	
+	conn.on('end', function(){
+		conn.write("close");
+	});
+
+});
+
+tcpServer.listen(TCP.port);

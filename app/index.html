@@ -90,8 +90,10 @@
                     var $curDevice = $(device).parent();
                     new Switch(device, function() {
                         $curDevice.removeClass('inactive');
+                        Cloudu.switcher.on();
                     }, function() {
                         $curDevice.addClass('inactive');
+                        Cloudu.switcher.off();
                     });
                 });
             });
