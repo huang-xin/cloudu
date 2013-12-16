@@ -32,26 +32,47 @@ var entry = function(req, res){
 	});
 }
 
-//var httpServer = http.createServer(entry);
-//httpServer.listen(BAE.port);
+var connMgr = {};
+var socketMgr = {};
 
-var io = require('socket.io').listen(BAE.port);
+var httpServer = http.createServer(entry);
+var io = require('socket.io').listen(httpServer);
+httpServer.listen(BAE.port);
+io.set("log level", 1);
 io.sockets.on('connection', function (socket) {
+	socketMgr.yss = socket;
 	socket.on('message', function (data) {
 		console.log("data_write_from_client:", data);
+		connMgr.yss.write(JSON.stringify({
+			open : data.on
+		}));
 	});
 	socket.on('disconnect', function(){
-		console.log('socket disconnected', socket);
+		console.log('socket disconnected');
 	});
 });
 
 var tcpServer = net.createServer(function(conn){
+	
+	connMgr.yss = conn;
 	conn.on('data', function(data){
-		conn.write(data.toString());
+		try{
+			data = JSON.stringify(data);
+			socketMgr.yss.emit('message', {
+				status : data.status
+			});
+		}catch(e){
+			console.log("errrrrr");
+		}
 	});
 	
 	conn.on('end', function(){
-		conn.write("close");
+		
+	});
+
+	conn.on('error', function(err){
+		console.log(err);
+		conn.end();
 	});
 
 });

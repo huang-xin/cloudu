@@ -1,4 +1,4 @@
-/*! cloudu - v0.0.0 - 2013-12-07 */
+/*! cloudu - v0.0.0 - 2013-12-14 */
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -3871,42 +3871,39 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 if (typeof define === "function" && define.amd) {
   define([], function () { return io; });
 }
-})();var cloudu = {};
+})();var Cloudu = {};
 
-cloudu.reg = function(name){
-	if(typeof cloudu[name] === 'undefined'){
-		cloudu[name] = {};
+Cloudu.reg = function(name){
+	if(typeof Cloudu[name] === 'undefined'){
+		Cloudu[name] = {};
 	}else{
 		console.log('duplicate module name');
 	}
-	return cloudu[name];
+	return Cloudu[name];
 };
-
 
 (function(){
 	
-	var dispatcher = cloudu.reg("dispatcher");
+	var dispatcher = Cloudu.reg("dispatcher");
 	dispatcher.onMessage = function(message){
-		console.log(message);
+		console.log("message", message);
 		try{
-			cloudu[message.cmd][message.method].call(null, message.data);
+			Cloudu[message.cmd][message.method].call(null, message.data);
 		}catch(e){
-			console.warm("cannot find handler", message);
+			console.warn("cannot find handler", message);
 		}
 	}
-	
+
 	var socket = io.connect(location.origin);
 	socket.on("message", dispatcher.onMessage);
-	
-	cloudu.socket = socket;
-	
+	Cloudu.socket = socket;
 })();(function(){
 	
-	var switcher = cloudu.reg('switch');
+	var switcher = Cloudu.reg('switch');
 	
 	switcher.on = function(data){
 		data = data || 0;
-		cloudu.socket.emit('message', { 
+		Cloudu.socket.emit('message', { 
 			id : data,
 			on : true 
 		});
@@ -3914,7 +3911,7 @@ cloudu.reg = function(name){
 	
 	switcher.off = function(data){
 		data = data || 0;
-		cloudu.socket.emit('message', { 
+		Cloudu.socket.emit('message', { 
 			id : data,
 			on : false 
 		});
