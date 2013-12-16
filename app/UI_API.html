@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="zh-cn" />
+		<title> new document </title>
+		<meta name="author" content="" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<script type="text/javascript" src="static/js/jquery-2.0.3.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="interface.js" charset="utf-8"></script>
+		
+	</head>
+
+	<body>
+		<button id="bindDID" type="button">绑定设备ID</button>
+		<button id="getDeng" type="button">获取灯信息</button>
+		<button id="getT" type="button">获取温度计信息</button>
+		<button id="putDeng" type="button">控制灯</button>
+		<button id="putT" type="button">控制温度计</button>
+
+		<button id="getList" type="button">获取所有信息</button>
+		<script type="text/javascript">
+		//<!--
+			//equal(value,
+				//expect,
+				//'value——expect'
+			//);
+			//deepEqual(value,[
+				
+			//], 'value——expect');
+
+
+			
+			var oUi = CLOUDU();
+			$('#bindDID').on('click', function () {
+				oUi.push('bindingDeviceId', {deviceId:'u9b2cosq-u2bw-8vn2-ygni-0rhwcyv88cby'}, function (oResp) {
+					alert('绑定成功，你的[ ' + oResp.data.d_name + ' ]' + '可以通过百度云联控制了。');
+					alert('操作界面将显示为:' + oResp.data.d_type);
+				});
+			});
+
+			oUi.listen('deviceMsg', function (oResp) {
+				console.log(oResp.data.list);
+			});
+
+			$('#getDeng').on('click', function () {
+				oUi.get('z8diz8otlsmi', function (oResp) {
+					alert('灯状态为：' + oResp.data.value.on);
+				});
+			});
+
+			$('#getT').on('click', function () {
+				oUi.get('3bfswxhz7q2s', function (oResp) {
+					alert('温度状态为：' + oResp.data.value.value1);
+				});
+				
+			});
+
+			$('#putDeng').on('click', function () {
+				oUi.put('z8diz8otlsmi', {on:false}, function (oResp) {
+					alert('灯状态变为：' + oResp.data.value.on);
+				});
+			});
+
+			$('#putT').on('click', function () {
+				oUi.put('3bfswxhz7q2s', {on:true}, function (oResp) {
+					alert('温度状态变为：' + oResp.data.value.on);
+				});
+			});
+
+			$('#getList').on('click', function () {
+				oUi.pull('deviceList', {on:true}, function (oResp) {
+					alert(JSON.stringify(oResp.data.list));
+				});
+			});
+		
+
+
+		//-->
+		</script>
+	</body>
+</html>

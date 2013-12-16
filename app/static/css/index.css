@@ -125,7 +125,7 @@
     -webkit-backface-visibility: hidden;
 }
 
-.ibulb {
+/*.ibulb {
     background-image: url(../images/icons/bulb.jpg);
     background-position: 0 0;
 }
@@ -145,6 +145,14 @@
 }
 .inactive .iiermu {
     background-position: 0 -90px;
+}*/
+.inactive .tile-image{
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
 }
 .inactive .tile-title {
     color: #aaa;

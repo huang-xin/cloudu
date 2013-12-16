@@ -23,7 +23,9 @@ body {
     color: #333;
     position: relative;
 }
-input,button,select,textarea{outline:none}
+input, button, select, textarea {
+    outline: none
+}
 i {
     font-style: normal;
     display: inline-block;
@@ -70,17 +72,17 @@ em {
 .red {
     color: #CC0000;
 }
-.green{
-    color:#08A000;
+.green {
+    color: #08A000;
 }
-.tdu{
-	text-decoration:underline;
+.tdu {
+    text-decoration: underline;
 }
 .tc {
     text-align: center;
 }
-.tl{
-	text-align:left;
+.tl {
+    text-align: left;
 }
 .clear {
     clear: both;
@@ -98,8 +100,8 @@ em {
 .dn {
     display: none;
 }
-.dib{
-	display:inline-block;
+.dib {
+    display: inline-block;
 }
 .fl {
     float: left;
@@ -119,11 +121,11 @@ em {
 .f12 {
     font-size: 12px;
 }
-.vt{
+.vt {
     vertical-align: top;
 }
-.vb{
-	vertical-align:bottom;
+.vb {
+    vertical-align: bottom;
 }
 
 .dbox {
@@ -144,12 +146,21 @@ em {
 /*---------atoms:end-------------*/
 
 /**, *:before, *:after {
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
-}*/
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
+ box-sizing: border-box;
+ }*/
 
-#page{
-    position:relative;
-    min-height:100%;
+#page {
+    position: relative;
+    min-height: 100%;
+}
+/*图片置灰*/
+img.gray {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
 }
