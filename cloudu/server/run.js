@@ -10,6 +10,7 @@ var connMgr = cloudu.connMgr = require('./connMgr')(cloudu);
 	deviceMgr = cloudu.deviceMgr = require('./deviceMgr')(cloudu);
 
 var dispatcher = require('./dispatcher')(cloudu);
+var db = require('./db');
 
 //socket
 var io = require('socket.io').listen(BAE.port);
