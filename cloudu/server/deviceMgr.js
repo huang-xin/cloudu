@@ -1,5 +1,6 @@
 var runnable = function(){
 
+	var devices = {};
 	var manager = {};
 
 }

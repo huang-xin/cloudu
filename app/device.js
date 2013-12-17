@@ -9,7 +9,7 @@ if(process.env && process.env.SERVER_SOFTWARE === 'bae/3.0'){
 }else{
 	options = {
 		port : 18088,
-		host : '192.168.199.234'
+		host : '172.22.133.128'
 	}
 }
 

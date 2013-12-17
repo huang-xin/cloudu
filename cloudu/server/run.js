@@ -1,19 +1,17 @@
-//TIPS: net auth/socket auth/fe require/GruntDevJS
-
+//TIPS: net auth/socket auth
 var cloudu = {};
 var net = require('net');
 var BAE = require('./bae');
 var utils = cloudu.utils = require('./utils');
 var config = cloudu.config = require('./config');
 
-var connMgr = cloudu.connMgr = require('./TCPMgr')(cloudu);
+var connMgr = cloudu.connMgr = require('./connMgr')(cloudu);
 	socketMgr = cloudu.socketMgr = require('./socketMgr')(cloudu),
 	deviceMgr = cloudu.deviceMgr = require('./deviceMgr')(cloudu);
 
 var dispatcher = require('./dispatcher')(cloudu);
 
-
-//localhost:8080  -------- bae3.0:18080
+//socket
 var io = require('socket.io').listen(BAE.port);
 io.set("log level", 1);
 io.sockets.on('connection', function (socket) {
@@ -35,22 +33,23 @@ io.sockets.on('connection', function (socket) {
 
 });
 
+//conn
 var tcpServer = net.createServer(function(conn){
 
-	//DO auth
-	var cuid = TCPMgr.add(conn);
+	//auth, init device, 
+	var cuid = connMgr.add(conn);
 
 	conn.on('data', function(data){
 		dispatcher.onConnData.apply(null, [conn, data]);
 	});
 	
 	conn.on('end', function(){
-		TCPMgr.remove(cuid);
+		connMgr.remove(cuid);
 	});
 
 	conn.on('error', function(err){
 		dispatcher.onConnErr.apply(null, [conn, err]);
-		TCPMgr.remove(cuid);
+		connMgr.remove(cuid);
 		conn.end();
 	});
 

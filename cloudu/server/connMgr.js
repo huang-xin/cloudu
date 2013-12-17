@@ -1,5 +1,7 @@
 var runnable = function(cloudu){
 
+	var deviceMgr = require('./deviceMgr');
+
 	var L = 10;//TODO change to uuid
 	var connections = {};
 
