@@ -1,7 +1,19 @@
 var runnable = function(){
 
 	var devices = {};
-	var manager = {};
+	var manager = {
+		add : function(device){
+			devices[device.id] = device;
+		},
+		remove : function(id){
+			delete devices[id];
+		},
+		find : function(id){
+			return devices[id];
+		}
+	};
+
+	return manager;
 
 }
 

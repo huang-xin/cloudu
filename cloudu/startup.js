@@ -1,28 +1,63 @@
-var cu = {};
+if(cloudu){
+	console.warn("cloudu exist!");
+}
+var cloudu = {};
 
-cu.reg = function(name){
-	if(typeof cu[name] === 'undefined'){
-		cu[name] = {};
+cloudu.reg = function(name){
+	if(typeof cloudu[name] === 'undefined'){
+		cloudu[name] = {};
 	}else{
 		console.log('duplicate module name');
 	}
-	return cu[name];
+	return cloudu[name];
 };
 
 (function(){
 	
-	var dispatcher = cu.reg("dispatcher");
-	dispatcher.onMessage = function(message){
-		console.log("message", message);
-		try{
-			cu[message.cmd][message.method].call(null, message.data);
-		}catch(e){
-			console.warn("cannot find handler", message);
+	var devices = {};
+	var device = cloudu.reg("device");
+	
+	device.task = function(id, action, onsuccess, onfail){
+		if(devices[id] && devices[id][action]){return;}
+		devices[id] = devices[id] || {};
+		if(devices[id][action]){ return; }
+		devices[id][action] = {};
+		devices[id][action].onsuccess = onsuccess;
+		devices[id][action].onfail = onfail;
+	}
+
+	device.get = function(id){
+		return devices[id];
+	}
+
+})();
+
+(function(){
+	
+	var dispatcher = cloudu.reg("dispatcher");
+	
+	dispatcher.onData = function(data){
+		console.log("onData", data);
+		var action = data.action;
+		var success = data.success;
+		var device = cloudu.device.get(data.id);
+		if(success){
+			device[action].onsuccess(data.info);
+		}else{
+			device[action].onfail(data.info);
 		}
 	}
 
-	var socket = io.connect('http://192.168.199.153:8080');
-	socket.on("message", dispatcher.onMessage);
-	cu.socket = socket;
+	dispatcher.onDisconnect = function(data){
+		console.log("onDisconnect", data);
+	}
+
+	var workAddr = "172.22.133.48:8080";
+	var homeAddr = "192.168.199.234:8080";
+	var socket = io.connect(homeAddr);
+	socket.on("message", dispatcher.onData);
+	socket.on("disconnect", dispatcher.onDisconnect);
+	
+	cloudu.socket = socket;
 	
 })();

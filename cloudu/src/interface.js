@@ -1,26 +1,31 @@
 (function(){
-	
-	//authorization
-	var auth = cu.reg('auth');
-	
 
-	//swicher
-	var switcher = cu.reg('switcher');
-
-	switcher.on = function(data){
-		data = data || 0;
-		cu.socket.emit('message', { 
-			id : data,
-			on : true
-		});
+	cloudu.listen = function(options){
+		var cmd = {
+			id : options.id,
+			action : 'listen',
+			keys : options.keys
+		}
+		cloudu.socket.emit('message', cmd);
+		cloudu.device.task(options.id, "listen", options.onsuccess, options.onfail);
+	}
+	
+	cloudu.on = function(options){
+		var cmd = {
+			id : options.id,
+			action : 'on',
+		}
+		cloudu.socket.emit('message', cmd);
+		cloudu.device.task(options.id, "on", options.onsuccess, options.onfail);
 	}
 
-	switcher.off = function(data){
-		data = data || 0;
-		cu.socket.emit('message', { 
-			id : data,
-			on : false
-		});
+	cloudu.off = function(options){
+		var cmd = {
+			id : options.id,
+			action : 'off',
+		}
+		cloudu.socket.emit('message', cmd);
+		cloudu.device.task(options.id, "off", options.onsuccess, options.onfail);
 	}
 	
 })();

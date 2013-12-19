@@ -9,4 +9,4 @@ MongoClient.connect(config.dbpath, function(err, db){
 	getCollection = db.collection;
 });
 
-module.exports = getCollection;
+exports.getCollection = getCollection;

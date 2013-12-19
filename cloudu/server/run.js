@@ -1,6 +1,8 @@
-//TIPS: net auth/socket auth
 var cloudu = {};
 var net = require('net');
+var util = cloudu.util = require('util');
+var events = cloudu.events = require('events');
+
 var BAE = require('./bae');
 var utils = cloudu.utils = require('./utils');
 var config = cloudu.config = require('./config');
@@ -10,17 +12,17 @@ var connMgr = cloudu.connMgr = require('./connMgr')(cloudu);
 	deviceMgr = cloudu.deviceMgr = require('./deviceMgr')(cloudu);
 
 var dispatcher = require('./dispatcher')(cloudu);
-var db = require('./db');
 
 //socket
 var io = require('socket.io').listen(BAE.port);
 io.set("log level", 1);
 io.sockets.on('connection', function (socket) {
-	
+
 	var id = socketMgr.add(socket);
-	
+
 	socket.on('message', function (data) {
-		dispatcher.onSocketData.apply(null, [socket, data]);
+		console.log("socket message", data);
+		dispatcher.onSocketData(socket, data);
 	});
 	
 	socket.on('disconnect', function(){
@@ -28,7 +30,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('error', function(err){
-		dispatcher.onSocketErr.apply(null, [socket, err]);
+		dispatcher.onSocketErr(socket, err);
 		socketMgr.remove(id);
 	});
 
@@ -37,10 +39,10 @@ io.sockets.on('connection', function (socket) {
 //conn
 var tcpServer = net.createServer(function(conn){
 
-	//auth, init device, 
 	var cuid = connMgr.add(conn);
-
+	
 	conn.on('data', function(data){
+		data = data.toString();
 		dispatcher.onConnData.apply(null, [conn, data]);
 	});
 	

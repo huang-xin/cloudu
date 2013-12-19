@@ -1,4 +1,4 @@
-/*! cloudunion - v0.0.0 - 2013-12-16 */
+/*! cloudunion - v0.0.0 - 2013-12-19 */
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -3871,24 +3871,27 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 if (typeof define === "function" && define.amd) {
   define([], function () { return io; });
 }
-})();var cu = {};
+})();if(cloudu){
+	console.warn("cloudu exist!");
+}
+var cloudu = {};
 
-cu.reg = function(name){
-	if(typeof cu[name] === 'undefined'){
-		cu[name] = {};
+cloudu.reg = function(name){
+	if(typeof cloudu[name] === 'undefined'){
+		cloudu[name] = {};
 	}else{
 		console.log('duplicate module name');
 	}
-	return cu[name];
+	return cloudu[name];
 };
 
 (function(){
 	
-	var dispatcher = cu.reg("dispatcher");
+	var dispatcher = cloudu.reg("dispatcher");
 	dispatcher.onMessage = function(message){
 		console.log("message", message);
 		try{
-			cu[message.cmd][message.method].call(null, message.data);
+			cloudu[message.cmd][message.method].call(null, message.data);
 		}catch(e){
 			console.warn("cannot find handler", message);
 		}
@@ -3896,17 +3899,22 @@ cu.reg = function(name){
 
 	var socket = io.connect('http://192.168.199.153:8080');
 	socket.on("message", dispatcher.onMessage);
-	cu.socket = socket;
+	cloudu.socket = socket;
 	
 })();(function(){
 	
+	//authorization
+	var auth = cu.reg('auth');
+	
+
+	//swicher
 	var switcher = cu.reg('switcher');
 
 	switcher.on = function(data){
 		data = data || 0;
 		cu.socket.emit('message', { 
 			id : data,
-			on : true 
+			on : true
 		});
 	}
 
@@ -3918,4 +3926,4 @@ cu.reg = function(name){
 		});
 	}
 	
-})()
+})();
