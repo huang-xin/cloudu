@@ -59,7 +59,7 @@ cloudu.reg = function(name){
 	var homeAddr = "192.168.199.234:8080";
 	var baeAddr = "cloudu.duapp.com:18080";
 	
-	var socket = io.connect(baeAddr);
+	var socket = io.connect(workAddr);
 	socket.on("message", dispatcher.onData);
 	socket.on("disconnect", dispatcher.onDisconnect);
 	

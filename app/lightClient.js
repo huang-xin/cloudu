@@ -1,7 +1,7 @@
 var net = require("net");
 var options;
 
-var mode = "bae";
+var mode = "local";
 
 if(mode === 'bae'){
 	options = {

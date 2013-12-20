@@ -22,8 +22,5 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/einsteinhx/cloudu/issues"
-  },
-  "dependencies": {
-    "socket.io": "~0.9.16"
   }
 }
