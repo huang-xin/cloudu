@@ -1,4 +1,4 @@
-/*! cloudunion - v0.0.0 - 2013-12-19 */
+/*! cloudunion - v0.0.0 - 2013-12-20 */
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -3887,43 +3887,82 @@ cloudu.reg = function(name){
 
 (function(){
 	
-	var dispatcher = cloudu.reg("dispatcher");
-	dispatcher.onMessage = function(message){
-		console.log("message", message);
-		try{
-			cloudu[message.cmd][message.method].call(null, message.data);
-		}catch(e){
-			console.warn("cannot find handler", message);
+	var devices = {};
+	var device = cloudu.reg("device");
+	
+	device.task = function(id, action, onsuccess, onfail){
+		if(!devices[id]){ devices[id] = {}; }
+		if(!devices[id][action]){
+			devices[id][action] = {};
+			devices[id][action].onsuccess = onsuccess;
+			devices[id][action].onfail = onfail;
 		}
 	}
 
-	var socket = io.connect('http://192.168.199.153:8080');
-	socket.on("message", dispatcher.onMessage);
+	device.get = function(id){
+		return devices[id];
+	}
+
+	device.show = function(){
+		console.log(devices);
+		return devices;
+	}
+
+})();
+
+(function(){
+	
+	var dispatcher = cloudu.reg("dispatcher");
+	
+	dispatcher.onData = function(data){
+		console.log("onData", data);
+		var action = data.action;
+		var success = data.success;
+		var device = cloudu.device.get(data.id);
+		if(success && device){
+			device[action].onsuccess(data.info);
+		}else{
+			device[action].onfail(data.info);
+		}
+	}
+
+	dispatcher.onDisconnect = function(data){
+		console.log("onDisconnect", data);
+	}
+
+	var workAddr = "172.22.133.48:8080";
+	var homeAddr = "192.168.199.234:8080";
+	var socket = io.connect(workAddr);
+	socket.on("message", dispatcher.onData);
+	socket.on("disconnect", dispatcher.onDisconnect);
+	
 	cloudu.socket = socket;
 	
 })();(function(){
-	
-	//authorization
-	var auth = cu.reg('auth');
-	
 
-	//swicher
-	var switcher = cu.reg('switcher');
-
-	switcher.on = function(data){
-		data = data || 0;
-		cu.socket.emit('message', { 
-			id : data,
-			on : true
-		});
+	cloudu.listen = function(options){
+		var cmd = {
+			id : options.id,
+			action : 'listen',
+			keys : options.keys
+		}
+		cloudu.socket.emit('message', cmd);
+	}
+	
+	cloudu.on = function(options){
+		var cmd = {
+			id : options.id,
+			action : 'on',
+		}
+		cloudu.socket.emit('message', cmd);
 	}
 
-	switcher.off = function(data){
-		data = data || 0;
-		cu.socket.emit('message', { 
-			id : data,
-			on : false
-		});
+	cloudu.off = function(options){
+		var cmd = {
+			id : options.id,
+			action : 'off',
+		}
+		cloudu.socket.emit('message', cmd);
 	}
 	
 })();
