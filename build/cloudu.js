@@ -3890,7 +3890,7 @@ cloudu.reg = function(name){
 	var devices = {};
 	var device = cloudu.reg("device");
 	
-	device.task = function(id, action, onsuccess, onfail){
+	device.init = function(id, action, onsuccess, onfail){
 		if(!devices[id]){ devices[id] = {}; }
 		if(!devices[id][action]){
 			devices[id][action] = {};
@@ -3904,7 +3904,6 @@ cloudu.reg = function(name){
 	}
 
 	device.show = function(){
-		console.log(devices);
 		return devices;
 	}
 
@@ -3915,7 +3914,6 @@ cloudu.reg = function(name){
 	var dispatcher = cloudu.reg("dispatcher");
 	
 	dispatcher.onData = function(data){
-		console.log("onData", data);
 		var action = data.action;
 		var success = data.success;
 		var device = cloudu.device.get(data.id);
@@ -3932,6 +3930,8 @@ cloudu.reg = function(name){
 
 	var workAddr = "172.22.133.48:8080";
 	var homeAddr = "192.168.199.234:8080";
+	var baeAddr = "cloudu.duapp.com:18080";
+	
 	var socket = io.connect(workAddr);
 	socket.on("message", dispatcher.onData);
 	socket.on("disconnect", dispatcher.onDisconnect);

@@ -13,9 +13,9 @@ window.addEventListener("load", function(){
 	}
 
 	var id = "hz3u8mi6"
-	cloudu.device.task(id, "listen", onsuccess, onfail);
-	cloudu.device.task(id, "on", onsuccess, onfail);
-	cloudu.device.task(id, "off", onsuccess, onfail);
+	cloudu.device.init(id, "listen", onsuccess, onfail);
+	cloudu.device.init(id, "on", onsuccess, onfail);
+	cloudu.device.init(id, "off", onsuccess, onfail);
 
 	$("listen").onclick = function(){
 		cloudu.listen({

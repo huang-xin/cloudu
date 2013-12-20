@@ -1,7 +1,9 @@
 var net = require("net");
 var options;
 
-if(process.env && process.env.SERVER_SOFTWARE === 'bae/3.0'){
+var mode = "bae";
+
+if(mode === 'bae'){
 	options = {
 		port : 30081,
 		host : '180.149.144.13'
@@ -9,7 +11,7 @@ if(process.env && process.env.SERVER_SOFTWARE === 'bae/3.0'){
 }else{
 	options = {
 		port : 18088,
-		host : '172.22.133.48' //'192.168.199.234' 
+		host : '172.22.133.48' //'192.168.199.234'
 	}
 }
 

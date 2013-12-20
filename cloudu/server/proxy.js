@@ -30,6 +30,7 @@ var runnable = function(cloudu){
 			}
 		},
 		reg : function(conn, data){
+			console.log("device register: ", data);
 			var d = new Device(data.id);
 			deviceMgr.add(d);
 			var hanlder = function(socket, action){
@@ -37,9 +38,8 @@ var runnable = function(cloudu){
 					id : data.id,
 					action : action
 				}
-
+				console.log("sync", data);
 				sendCommand(conn, cmd, function(data){
-					
 					socket.broadcast.emit("message", {
 						id : data.id,
 						action : action,
