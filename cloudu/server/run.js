@@ -21,7 +21,6 @@ io.sockets.on('connection', function (socket) {
 	var id = socketMgr.add(socket);
 
 	socket.on('message', function (data) {
-		console.log("socket message", data);
 		dispatcher.onSocketData(socket, data);
 	});
 	

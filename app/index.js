@@ -16,23 +16,29 @@ window.addEventListener("load", function(){
 	cloudu.device.init(id, "listen", onsuccess, onfail);
 	cloudu.device.init(id, "on", onsuccess, onfail);
 	cloudu.device.init(id, "off", onsuccess, onfail);
+	cloudu.device.init(id, "set", onsuccess, onfail);
+	cloudu.device.init(id, "get", onsuccess, onfail);
 
 	$("listen").onclick = function(){
-		cloudu.listen({
-		    id : "hz3u8mi6"
-		});
+		cloudu.listen("hz3u8mi6");
 	}
 
 	$("open").onclick = function(){
-		cloudu.on({
-		    id : "hz3u8mi6"
-		});
+		cloudu.on("hz3u8mi6");
 	}
 
 	$("close").onclick = function(){
-		cloudu.off({
-		    id : "hz3u8mi6"
+		cloudu.off("hz3u8mi6");
+	}
+
+	$("set").onclick = function(){
+		cloudu.set("hz3u8mi6", {
+			on : 1
 		});
+	}
+
+	$("get").onclick = function(){
+		cloudu.get("hz3u8mi6");
 	}
 	
 }, false);

@@ -1,4 +1,4 @@
-/*! cloudu - v0.0.1 - 2013-12-20 */
+/*! cloudu - v0.0.1 - 2013-12-21 */
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -3890,12 +3890,12 @@ cloudu.reg = function(name){
 	var devices = {};
 	var device = cloudu.reg("device");
 	
-	device.init = function(id, action, onsuccess, onfail){
+	device.init = function(id, cmd, onsuccess, onfail){
 		if(!devices[id]){ devices[id] = {}; }
-		if(!devices[id][action]){
-			devices[id][action] = {};
-			devices[id][action].onsuccess = onsuccess;
-			devices[id][action].onfail = onfail;
+		if(!devices[id][cmd]){
+			devices[id][cmd] = {};
+			devices[id][cmd].onsuccess = onsuccess;
+			devices[id][cmd].onfail = onfail;
 		}
 	}
 
@@ -3914,13 +3914,13 @@ cloudu.reg = function(name){
 	var dispatcher = cloudu.reg("dispatcher");
 	
 	dispatcher.onData = function(data){
-		var action = data.action;
+		var cmd = data.cmd;
 		var success = data.success;
 		var device = cloudu.device.get(data.id);
 		if(success && device){
-			device[action].onsuccess(data.values);
+			device[cmd].onsuccess(data.values);
 		}else{
-			device[action].onfail(data.values);
+			device[cmd].onfail(data.values);
 		}
 	}
 
@@ -3933,7 +3933,7 @@ cloudu.reg = function(name){
 	var baeAddr = "cloudu.duapp.com:18080";
 	var hackathonAddr = "172.21.204.62:8080";
 	
-	var socket = io.connect(hackathonAddr);
+	var socket = io.connect(homeAddr);
 	socket.on("message", dispatcher.onData);
 	socket.on("disconnect", dispatcher.onDisconnect);
 	
@@ -3941,27 +3941,46 @@ cloudu.reg = function(name){
 	
 })();(function(){
 
-	cloudu.listen = function(options){
+	cloudu.listen = function(id){
+		if(typeof id === 'object'){ id = id.id; }
 		var cmd = {
-			id : options.id,
-			action : 'listen',
-			keys : options.keys
+			id : id,
+			cmd : 'listen'
 		}
 		cloudu.socket.emit('message', cmd);
 	}
 	
-	cloudu.on = function(options){
+	cloudu.on = function(id){
+		if(typeof id === 'object'){ id = id.id; }
 		var cmd = {
-			id : options.id,
-			action : 'on',
+			id : id,
+			cmd : 'on',
 		}
 		cloudu.socket.emit('message', cmd);
 	}
 
-	cloudu.off = function(options){
+	cloudu.off = function(id){
+		if(typeof id === 'object'){ id = id.id; }
 		var cmd = {
-			id : options.id,
-			action : 'off',
+			id : id,
+			cmd : 'off',
+		}
+		cloudu.socket.emit('message', cmd);
+	}
+
+	cloudu.set = function(id, values){
+		var cmd = {
+			id : id,
+			values : values,
+			cmd : 'set'
+		}
+		cloudu.socket.emit('message', cmd);
+	}
+
+	cloudu.get = function(id){
+		var cmd = {
+			id : id,
+			cmd : 'get'
 		}
 		cloudu.socket.emit('message', cmd);
 	}

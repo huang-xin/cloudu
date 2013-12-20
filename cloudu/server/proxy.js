@@ -12,12 +12,12 @@ var runnable = function(cloudu){
 
 	var cluster = {};
 
-	var sendCommand = function(conn, cmd, callback){
+	var sendCommand = function(conn, command, callback){
 		var uucode = cloudu.utils.randomStr(12);
 		cluster[uucode] = callback;
-		cmd.uucode = uucode;
-		console.log("cmd", cmd);
-		puts(conn, JSON.stringify(cmd));
+		command.uucode = uucode;
+		console.log("command", command);
+		puts(conn, JSON.stringify(command));
 	}
 
 	var puts = function(conn, data){
@@ -37,46 +37,42 @@ var runnable = function(cloudu){
 		},
 
 		reg : function(conn, data){
-			console.log("device register: ", data);
+			console.log("device registry: ", data);
 			var d = new Device(data.id);
 			deviceMgr.add(d);
-			var hanlder = function(socket, action){
-				var cmd = {
+			var hanlder = function(socket, cmd){
+				var command = {
 					id : data.id,
-					action : action
+					cmd : cmd.cmd,
+					info : cmd.values
 				}
-				console.log("sync", data);
-				sendCommand(conn, cmd, function(data){
-					socket.broadcast.emit("message", {
+				sendCommand(conn, command, function(data){
+					var resp = {
 						id : data.id,
-						action : action,
-						values : data.info,
-						success : true
-					});
-
-					socket.emit("message", {
-						id : data.id,
-						action : action,
-						values : data.info,
-						success : true
-					});
+						cmd : cmd.cmd,
+						values : data.info || data.values,
+						success : data.success
+					}
+					console.log("response", resp);
+					socket.emit("message", resp);
+					if(data.diff){
+						socket.broadcast.emit("message", resp);
+					}
 
 				});
 			}
-			d.on('listen', hanlder);
-			d.on('on', hanlder);
-			d.on('off', hanlder);
+			d.on("command", hanlder);
 		}
 
 	}
 
-	var socketProxy = function(socket, data){
-		var d = deviceMgr.find(data.id);
-		d && d.emit(data.action, socket, data.action);
+	var socketProxy = function(socket, cmd){
+		var d = deviceMgr.find(cmd.id);
+		d && d.emit("command", socket, cmd);
 		if(!d){
 			socket.emit("message", {
-				id : data.id,
-				action : data.action,
+				id : cmd.id,
+				action : cmd.action,
 				values : {
 					err : "device not found"
 				},

@@ -17,12 +17,12 @@ cloudu.reg = function(name){
 	var devices = {};
 	var device = cloudu.reg("device");
 	
-	device.init = function(id, action, onsuccess, onfail){
+	device.init = function(id, cmd, onsuccess, onfail){
 		if(!devices[id]){ devices[id] = {}; }
-		if(!devices[id][action]){
-			devices[id][action] = {};
-			devices[id][action].onsuccess = onsuccess;
-			devices[id][action].onfail = onfail;
+		if(!devices[id][cmd]){
+			devices[id][cmd] = {};
+			devices[id][cmd].onsuccess = onsuccess;
+			devices[id][cmd].onfail = onfail;
 		}
 	}
 
@@ -41,13 +41,13 @@ cloudu.reg = function(name){
 	var dispatcher = cloudu.reg("dispatcher");
 	
 	dispatcher.onData = function(data){
-		var action = data.action;
+		var cmd = data.cmd;
 		var success = data.success;
 		var device = cloudu.device.get(data.id);
 		if(success && device){
-			device[action].onsuccess(data.values);
+			device[cmd].onsuccess(data.values);
 		}else{
-			device[action].onfail(data.values);
+			device[cmd].onfail(data.values);
 		}
 	}
 
@@ -60,7 +60,7 @@ cloudu.reg = function(name){
 	var baeAddr = "cloudu.duapp.com:18080";
 	var hackathonAddr = "172.21.204.62:8080";
 	
-	var socket = io.connect(hackathonAddr);
+	var socket = io.connect(homeAddr);
 	socket.on("message", dispatcher.onData);
 	socket.on("disconnect", dispatcher.onDisconnect);
 	
