@@ -14,6 +14,7 @@ var connMgr = cloudu.connMgr = require('./connMgr')(cloudu);
 var dispatcher = require('./dispatcher')(cloudu);
 
 //socket
+console.log("BAE.port", BAE.port);
 var io = require('socket.io').listen(BAE.port);
 io.set("log level", 1);
 io.sockets.on('connection', function (socket) {

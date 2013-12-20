@@ -5,8 +5,8 @@ var mode = "bae";
 
 if(mode === 'bae'){
 	options = {
-		port : 30081,
-		host : '180.149.144.13'
+		port : 18088,
+		host : '180.149.144.13:30081'
 	}
 }else{
 	options = {
