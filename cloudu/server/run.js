@@ -42,7 +42,7 @@ var tcpServer = net.createServer(function(conn){
 	var cuid = connMgr.add(conn);
 	
 	conn.on('data', function(data){
-		data = data.toString();
+		data = data.toString().slice(0,-3);
 		dispatcher.onConnData.apply(null, [conn, data]);
 	});
 	

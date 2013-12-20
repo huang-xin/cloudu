@@ -11,8 +11,11 @@ var runnable = function(cloudu){
 	}
 
 	var onConnData = function(conn, data){
-		data = JSON.parse(data);
-		proxy.conn[data.action](conn, data);
+		data = data.split("!!!");
+		data.forEach(function(item){
+			var msg = JSON.parse(item);
+			proxy.conn[msg.action](conn, msg);
+		});
 	}
 
 	var onConnErr = function(conn, err){

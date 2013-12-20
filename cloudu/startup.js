@@ -45,9 +45,9 @@ cloudu.reg = function(name){
 		var success = data.success;
 		var device = cloudu.device.get(data.id);
 		if(success && device){
-			device[action].onsuccess(data.info);
+			device[action].onsuccess(data.values);
 		}else{
-			device[action].onfail(data.info);
+			device[action].onfail(data.values);
 		}
 	}
 
@@ -58,8 +58,9 @@ cloudu.reg = function(name){
 	var workAddr = "172.22.133.48:8080";
 	var homeAddr = "192.168.199.234:8080";
 	var baeAddr = "cloudu.duapp.com:18080";
+	var hackathonAddr = "172.21.204.62:8080";
 	
-	var socket = io.connect(workAddr);
+	var socket = io.connect(hackathonAddr);
 	socket.on("message", dispatcher.onData);
 	socket.on("disconnect", dispatcher.onDisconnect);
 	

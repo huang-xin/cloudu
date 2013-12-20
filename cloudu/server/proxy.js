@@ -16,10 +16,16 @@ var runnable = function(cloudu){
 		var uucode = cloudu.utils.randomStr(12);
 		cluster[uucode] = callback;
 		cmd.uucode = uucode;
-		conn.write(JSON.stringify(cmd));
+		console.log("cmd", cmd);
+		puts(conn, JSON.stringify(cmd));
+	}
+
+	var puts = function(conn, data){
+		conn.write(data + "!!!");
 	}
 
 	var connProxy = {
+
 		push : function(conn, data){
 			var d = deviceMgr.find(data.id);
 			if(data.uucode){
@@ -29,6 +35,7 @@ var runnable = function(cloudu){
 				console.log("uucode not found.", data);
 			}
 		},
+
 		reg : function(conn, data){
 			console.log("device register: ", data);
 			var d = new Device(data.id);
@@ -43,14 +50,14 @@ var runnable = function(cloudu){
 					socket.broadcast.emit("message", {
 						id : data.id,
 						action : action,
-						info : data.info,
+						values : data.info,
 						success : true
 					});
 
 					socket.emit("message", {
 						id : data.id,
 						action : action,
-						info : data.info,
+						values : data.info,
 						success : true
 					});
 
@@ -66,6 +73,16 @@ var runnable = function(cloudu){
 	var socketProxy = function(socket, data){
 		var d = deviceMgr.find(data.id);
 		d && d.emit(data.action, socket, data.action);
+		if(!d){
+			socket.emit("message", {
+				id : data.id,
+				action : data.action,
+				values : {
+					err : "device not found"
+				},
+				success : false
+			});
+		}
 	}
 
 	return {
