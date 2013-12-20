@@ -7,7 +7,6 @@
 			keys : options.keys
 		}
 		cloudu.socket.emit('message', cmd);
-		cloudu.device.task(options.id, "listen", options.onsuccess, options.onfail);
 	}
 	
 	cloudu.on = function(options){
@@ -16,7 +15,6 @@
 			action : 'on',
 		}
 		cloudu.socket.emit('message', cmd);
-		cloudu.device.task(options.id, "on", options.onsuccess, options.onfail);
 	}
 
 	cloudu.off = function(options){
@@ -25,7 +23,6 @@
 			action : 'off',
 		}
 		cloudu.socket.emit('message', cmd);
-		cloudu.device.task(options.id, "off", options.onsuccess, options.onfail);
 	}
 	
 })();

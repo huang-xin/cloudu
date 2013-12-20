@@ -2,26 +2,37 @@ var $ = function(id){
 	return document.getElementById(id);
 }
 
-$("open").onclick = function(){
-	cloudu.on({
-	    id : "hz3u8mi6",
-	    onsuccess : function(data){console.log(data);},
-	    onfail : function(data){console.log(data);}
-	});
-}
+window.addEventListener("load", function(){
 
-$("close").onclick = function(){
-	cloudu.off({
-	    id : "hz3u8mi6",
-	    onsuccess : function(data){console.log(data);},
-	    onfail : function(data){console.log(data);}
-	});
-}
+	var onsuccess = function(data){
+		console.log("success", data);
+	}
 
-$("listen").onclick = function(){
-	cloudu.listen({
-	    id : "hz3u8mi6",
-	    onsuccess : function(data){console.log(data);},
-	    onfail : function(data){console.log(data);}
-	});
-}
+	var onfail = function(data){
+		console.log("fail", data);
+	}
+
+	var id = "hz3u8mi6"
+	cloudu.device.task(id, "listen", onsuccess, onfail);
+	cloudu.device.task(id, "on", onsuccess, onfail);
+	cloudu.device.task(id, "off", onsuccess, onfail);
+
+	$("listen").onclick = function(){
+		cloudu.listen({
+		    id : "hz3u8mi6"
+		});
+	}
+
+	$("open").onclick = function(){
+		cloudu.on({
+		    id : "hz3u8mi6"
+		});
+	}
+
+	$("close").onclick = function(){
+		cloudu.off({
+		    id : "hz3u8mi6"
+		});
+	}
+	
+}, false);

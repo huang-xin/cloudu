@@ -37,13 +37,23 @@ var runnable = function(cloudu){
 					id : data.id,
 					action : action
 				}
+
 				sendCommand(conn, cmd, function(data){
+					
+					socket.broadcast.emit("message", {
+						id : data.id,
+						action : action,
+						info : data.info,
+						success : true
+					});
+
 					socket.emit("message", {
 						id : data.id,
 						action : action,
 						info : data.info,
 						success : true
 					});
+
 				});
 			}
 			d.on('listen', hanlder);

@@ -18,16 +18,21 @@ cloudu.reg = function(name){
 	var device = cloudu.reg("device");
 	
 	device.task = function(id, action, onsuccess, onfail){
-		if(devices[id] && devices[id][action]){return;}
-		devices[id] = devices[id] || {};
-		if(devices[id][action]){ return; }
-		devices[id][action] = {};
-		devices[id][action].onsuccess = onsuccess;
-		devices[id][action].onfail = onfail;
+		if(!devices[id]){ devices[id] = {}; }
+		if(!devices[id][action]){
+			devices[id][action] = {};
+			devices[id][action].onsuccess = onsuccess;
+			devices[id][action].onfail = onfail;
+		}
 	}
 
 	device.get = function(id){
 		return devices[id];
+	}
+
+	device.show = function(){
+		console.log(devices);
+		return devices;
 	}
 
 })();
@@ -41,7 +46,7 @@ cloudu.reg = function(name){
 		var action = data.action;
 		var success = data.success;
 		var device = cloudu.device.get(data.id);
-		if(success){
+		if(success && device){
 			device[action].onsuccess(data.info);
 		}else{
 			device[action].onfail(data.info);
@@ -54,7 +59,7 @@ cloudu.reg = function(name){
 
 	var workAddr = "172.22.133.48:8080";
 	var homeAddr = "192.168.199.234:8080";
-	var socket = io.connect(homeAddr);
+	var socket = io.connect(workAddr);
 	socket.on("message", dispatcher.onData);
 	socket.on("disconnect", dispatcher.onDisconnect);
 	
