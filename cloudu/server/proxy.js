@@ -13,10 +13,11 @@ var runnable = function(cloudu){
 	var cluster = {};
 
 	var sendCommand = function(conn, command, callback){
+		conn.setNoDelay(true);
 		var uucode = cloudu.utils.randomStr(12);
 		cluster[uucode] = callback;
 		command.uucode = uucode;
-		console.log("command", command);
+		console.log("command", command, "\n");
 		puts(conn, JSON.stringify(command));
 	}
 
@@ -30,14 +31,14 @@ var runnable = function(cloudu){
 			var d = deviceMgr.find(data.id);
 			if(data.uucode){
 				cluster[data.uucode](data);
-				delete cluster[data.uucode];
+				//delete cluster[data.uucode];
 			}else{
-				console.log("uucode not found.", data);
+				console.log("uucode not found.", data, "\n");
 			}
 		},
 
 		reg : function(conn, data){
-			console.log("device registry: ", data);
+			console.log("device registry: ", data, "\n");
 			var d = new Device(data.id);
 			deviceMgr.add(d);
 			var hanlder = function(socket, cmd){
@@ -51,14 +52,13 @@ var runnable = function(cloudu){
 						id : data.id,
 						cmd : cmd.cmd,
 						values : data.info || data.values,
-						success : data.success
+						success : true
 					}
-					console.log("response", resp);
-					socket.emit("message", resp);
-					if(data.diff){
+					console.log("response", resp, "\n");
+					if(cmd.cmd === "on" || cmd.cmd === "off"){
 						socket.broadcast.emit("message", resp);
 					}
-
+					socket.emit("message", resp);
 				});
 			}
 			d.on("command", hanlder);
@@ -72,7 +72,7 @@ var runnable = function(cloudu){
 		if(!d){
 			socket.emit("message", {
 				id : cmd.id,
-				action : cmd.action,
+				cmd : cmd.cmd,
 				values : {
 					err : "device not found"
 				},

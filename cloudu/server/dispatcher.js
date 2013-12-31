@@ -14,6 +14,7 @@ var runnable = function(cloudu){
 		data = data.split("!!!");
 		data.forEach(function(item){
 			var msg = JSON.parse(item);
+			console.log("msg from device", msg, "\n");
 			proxy.conn[msg.action](conn, msg);
 		});
 	}

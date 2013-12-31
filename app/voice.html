@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0" name="viewport" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<script type="text/javascript" src="http://bcscdn.baidu.com/bcs-cdn/clouda/api-latest.js"></script>
+	<title>VOICE</title>
+</head>
+<body>
+	<h1>VOICE OF BAIDU</h1>
+	<script type="text/javascript">
+		window.addEventListener("load", function(e){
+			clouda.lightapp("VeDdg6Kees4APXuaOFslObjS");
+			clouda.mbaas.vtt.showDialog({
+				onsuccess : function(data){
+					alert(data.data);
+				},
+				onfail : function(err){
+					alert(err)
+				},
+				speechMode : clouda.mbaas.VTT_SPEECHMODE.INPUT
+			});
+		});
+	</script>
+</body>
+</html>
