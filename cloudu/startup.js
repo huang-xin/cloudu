@@ -59,8 +59,9 @@ cloudu.reg = function(name){
 	var homeAddr = "192.168.199.234:8080";
 	var baeAddr = "cloudu.duapp.com:18080";
 	var hackathonAddr = "172.21.204.37:8080";
+	var jpaasAddr = "10.50.15.94:8080";
 	
-	var socket = io.connect(hackathonAddr);
+	var socket = io.connect(jpaasAddr);
 	socket.on("message", dispatcher.onData);
 	socket.on("disconnect", dispatcher.onDisconnect);
 	

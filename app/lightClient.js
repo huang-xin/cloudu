@@ -10,9 +10,10 @@ if(mode === 'bae'){
 	}
 }else{
 	options = {
-		port : 18088,
-		host : '172.21.204.37' //'172.21.204.62'
+		port : 8090,
+		host : '10.50.15.94' //'172.21.204.62'
 	}
+	console.log(options)
 }
 
 var lights = {
@@ -63,6 +64,12 @@ var client = net.connect(options, function(){
 	client.puts(JSON.stringify(reg1));
 	client.puts(JSON.stringify(reg2));
 	client.puts(JSON.stringify(reg3));
+	
+	console.log("connected");
+});
+
+client.on('error', function(e){
+	console.log(e);
 });
 
 client.on('data', function(data) {
