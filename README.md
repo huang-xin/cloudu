@@ -22,3 +22,5 @@ Clouda：基于Nodejs的服务端开发框架，为移动而生，让移动web�
 
 
 Restful: https://zybuluo.com/yanbo-ai/note/17890
+
+https://github.com/expressjs/csrf-tokens/blob/master/index.js
